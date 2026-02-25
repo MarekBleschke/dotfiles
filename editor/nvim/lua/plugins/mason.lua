@@ -10,7 +10,7 @@ return {
       "hadolint",
       "jdtls",
       "json-lsp",
-      "kotlin-language-server",
+      "kotlin-lsp",
       "ktlint",
       "lua-language-server",
       "markdown-toc",
