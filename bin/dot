@@ -34,12 +34,28 @@ done
 
 export MY_ZSH=$HOME/.dotfiles
 
+# Load saved profile
+DOTFILES_PROFILE_FILE="$HOME/.dotfiles_profile"
+if [[ -f "$DOTFILES_PROFILE_FILE" ]]; then
+  DOTFILES_PROFILE=$(cat "$DOTFILES_PROFILE_FILE")
+  echo "› Using profile: $DOTFILES_PROFILE"
+else
+  DOTFILES_PROFILE=""
+  echo "› Using base configuration (no profile)"
+fi
+
 # Update dotfiles
 echo "› git pull"
 if [[ "${DEBUG:-0}" == 1 ]]; then
   echo "skipping git pull - DEBUG mode"
 else
   git -C $MY_ZSH pull
+fi
+
+# Update submodules (for profiles)
+if [[ -n "$DOTFILES_PROFILE" ]]; then
+  echo "› git submodule update"
+  git -C $MY_ZSH submodule update --init --recursive
 fi
 
 # Set macOS defaults
