@@ -154,7 +154,7 @@ install_dotfiles() {
     local profile_path
     profile_path=$(get_profile_path "$PROFILE")
     if [ -d "$profile_path" ]; then
-      for symlinks in $(find -H "$profile_path" -maxdepth 2 -name 'symlinks' 2>/dev/null); do
+      for symlinks in $(find -H "$profile_path" -maxdepth 2 -name 'symlinks' -not -path '*.git*' 2>/dev/null); do
         srcDir="$(dirname "$symlinks")"
         while read -r src dst _; do
           # skip empty lines and comments
