@@ -19,11 +19,11 @@ get_profile() {
   local arg_profile="${1:-}"
 
   # Priority: argument > env var > saved file
-  if [ -n "$arg_profile" ]; then
+  if [[ -n "$arg_profile" ]]; then
     echo "$arg_profile"
-  elif [ -n "${DOTFILES_PROFILE:-}" ]; then
+  elif [[ -n "${DOTFILES_PROFILE:-}" ]]; then
     echo "$DOTFILES_PROFILE"
-  elif [ -f "$PROFILE_FILE" ]; then
+  elif [[ -f "$PROFILE_FILE" ]]; then
     cat "$PROFILE_FILE"
   else
     echo ""
@@ -35,12 +35,12 @@ get_profile() {
 validate_profile() {
   local profile="$1"
 
-  if [ -z "$profile" ]; then
+  if [[ -z "$profile" ]]; then
     return 0
   fi
 
   local profile_path="$PROFILES_DIR/$profile"
-  if [ ! -d "$profile_path" ]; then
+  if [[ ! -d "$profile_path" ]]; then
     fail "Profile '$profile' not found at $profile_path"
   fi
 }
@@ -49,10 +49,10 @@ validate_profile() {
 save_profile() {
   local profile="$1"
 
-  if [ -n "$profile" ]; then
+  if [[ -n "$profile" ]]; then
     echo "$profile" > "$PROFILE_FILE"
     success "Profile '$profile' saved to $PROFILE_FILE"
-  elif [ -f "$PROFILE_FILE" ]; then
+  elif [[ -f "$PROFILE_FILE" ]]; then
     rm "$PROFILE_FILE"
     info "Profile cleared (using base config only)"
   fi
@@ -63,7 +63,7 @@ save_profile() {
 get_profile_path() {
   local profile="$1"
 
-  if [ -n "$profile" ]; then
+  if [[ -n "$profile" ]]; then
     echo "$PROFILES_DIR/$profile"
   else
     echo ""
