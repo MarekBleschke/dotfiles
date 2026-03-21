@@ -31,7 +31,7 @@ get_profile() {
 }
 
 # Validate that profile exists as a directory
-# Returns 0 if valid or empty, 1 if invalid
+# Exits with error if profile is invalid
 validate_profile() {
   local profile="$1"
 
@@ -42,10 +42,7 @@ validate_profile() {
   local profile_path="$PROFILES_DIR/$profile"
   if [ ! -d "$profile_path" ]; then
     fail "Profile '$profile' not found at $profile_path"
-    return 1
   fi
-
-  return 0
 }
 
 # Save profile name to persistent file
