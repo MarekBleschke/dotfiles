@@ -3,13 +3,13 @@
 # Usage: Run this script from the dotfiles repository root.
 #        script/bootstrap.sh [--profile <name>]
 
-source "$(dirname $0)/_functions.sh" # Load helper functions
+source "$(dirname "$0")/_functions.sh" # Load helper functions
 
-cd "$(dirname $0)/.."   # Change to repository root
+cd "$(dirname "$0")/.."   # Change to repository root
 DOTFILES_ROOT=$(pwd -P) # Store absolute path to dotfiles root
 export DOTFILES_ROOT
 
-source "$(dirname $0)/_profile.sh" # Load profile functions
+source "$(dirname "$0")/_profile.sh" # Load profile functions
 
 echo "Current pwd: $(pwd)"
 
