@@ -11,8 +11,6 @@ export DOTFILES_ROOT
 
 source "$(dirname "$0")/_profile.sh" # Load profile functions
 
-echo "Current pwd: $(pwd)"
-
 set -eu # Exit on error or unset variable
 
 # Parse command line arguments
