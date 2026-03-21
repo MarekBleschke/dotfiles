@@ -3,7 +3,7 @@
 set -eu
 
 parentDirectory="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
-dotfilesDirecotry="$(cd "$(dirname "$parentDirectory")" && pwd -P)"
+dotfilesDirectory="$(cd "$(dirname "$parentDirectory")" && pwd -P)"
 
 displayUsageAndExit() {
   echo "dot -- dotfiles management"
@@ -22,7 +22,7 @@ while test $# -gt 0; do
     displayUsageAndExit
     ;;
   "-e" | "--edit")
-    exec "$EDITOR" "$dotfilesDirecotry"
+    exec "$EDITOR" "$dotfilesDirectory"
     ;;
   *)
     echo "Invalid option: $1"
