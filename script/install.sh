@@ -5,14 +5,21 @@
 
 set -e
 
-cd "$(dirname $0)"/..
+cd "$(dirname "$0")"/..
 DOTFILES_ROOT=$(pwd -P)
 
 # Load saved profile
 DOTFILES_PROFILE_FILE="$HOME/.dotfiles_profile"
 if [[ -f "$DOTFILES_PROFILE_FILE" ]]; then
   DOTFILES_PROFILE=$(cat "$DOTFILES_PROFILE_FILE")
-  echo "› Using profile: $DOTFILES_PROFILE"
+  # Validate profile directory exists
+  if [[ ! -d "$DOTFILES_ROOT/profiles/$DOTFILES_PROFILE" ]]; then
+    echo "Warning: Profile '$DOTFILES_PROFILE' not found at $DOTFILES_ROOT/profiles/$DOTFILES_PROFILE"
+    echo "Continuing with base installers only"
+    DOTFILES_PROFILE=""
+  else
+    echo "› Using profile: $DOTFILES_PROFILE"
+  fi
 else
   DOTFILES_PROFILE=""
 fi
