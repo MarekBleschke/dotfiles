@@ -20,6 +20,11 @@ PROFILE_ARG=""
 while [[ $# -gt 0 ]]; do
   case $1 in
     --profile)
+      if [[ -z "${2:-}" ]]; then
+        echo "Error: --profile requires a value"
+        echo "Usage: script/bootstrap.sh [--profile <name>]"
+        exit 1
+      fi
       PROFILE_ARG="$2"
       shift 2
       ;;
