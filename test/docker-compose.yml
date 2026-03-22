@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  dotfiles-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/dotfiles:ro
+      - ./mock-profile:/dotfiles/profiles/test:ro
+    environment:
+      - HOME=/home/testuser
+    working_dir: /home/testuser
+    stdin_open: true
+    tty: true
