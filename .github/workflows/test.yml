@@ -30,7 +30,7 @@ jobs:
         run: |
           docker run --rm \
             -v "${{ github.workspace }}:/dotfiles:ro" \
-            -v "${{ github.workspace }}/test/mock-profile:/dotfiles/profiles/test:ro" \
+            -v "${{ github.workspace }}/test/mock-profile:/mock-profile:ro" \
             dotfiles-test:latest \
             /dotfiles/test/test-profile-feature.sh
 

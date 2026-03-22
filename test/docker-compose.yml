@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   dotfiles-test:
     build:
@@ -6,7 +5,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ..:/dotfiles:ro
-      - ./mock-profile:/dotfiles/profiles/test:ro
+      - ./mock-profile:/mock-profile:ro
     environment:
       - HOME=/home/testuser
     working_dir: /home/testuser
