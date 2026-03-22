@@ -137,7 +137,7 @@ install_dotfiles() {
   declare -A symlink_map
 
   # First, collect all base symlinks
-  for symlinks in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name 'symlinks' -not -path '*.git*' -not -path '*profiles*'); do
+  for symlinks in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name 'symlinks' -not -path '*.git*' -not -path '*profiles*' -not -path '*test*'); do
     srcDir="$(dirname "$symlinks")"
     while read -r src dst _; do
       # skip empty lines and comments

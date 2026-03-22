@@ -29,7 +29,7 @@ brew bundle
 
 # Run base installers (excluding script/ and profiles/)
 echo "› Running base installers"
-find . -name install.sh -not -path './script/*' -not -path './profiles/*' | while read installer; do
+find . -name install.sh -not -path './script/*' -not -path './profiles/*' -not -path './test/*' | while read installer; do
   sh -c "${installer}"
 done
 

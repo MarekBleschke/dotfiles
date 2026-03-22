@@ -48,7 +48,7 @@ typeset -A file_map  # Maps relative path -> absolute path
 # First, collect base dotfiles (excluding profiles directory)
 for file in $MY_ZSH/**/*.zsh; do
   # Skip files in profiles directory
-  [[ "$file" == *"/profiles/"* ]] && continue
+  [[ "$file" == *"/profiles/"* || "$file" == *"/test/"* ]] && continue
   # Get relative path from MY_ZSH
   local rel_path="${file#$MY_ZSH/}"
   file_map[$rel_path]="$file"
