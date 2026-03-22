@@ -18,12 +18,12 @@ TESTS_FAILED=0
 # Helper functions
 pass() {
   echo -e "${GREEN}PASS${NC}: $1"
-  ((TESTS_PASSED++))
+  ((TESTS_PASSED++)) || true
 }
 
 fail() {
   echo -e "${RED}FAIL${NC}: $1"
-  ((TESTS_FAILED++))
+  ((TESTS_FAILED++)) || true
 }
 
 info() {
@@ -37,6 +37,10 @@ setup() {
   # Copy dotfiles to home directory
   cp -r /dotfiles ~/.dotfiles
 
+  # Copy mock profile to profiles directory
+  mkdir -p ~/.dotfiles/profiles
+  cp -r /mock-profile ~/.dotfiles/profiles/test
+
   # Create mock oh-my-zsh (required by zshrc)
   mkdir -p ~/.oh-my-zsh
   touch ~/.oh-my-zsh/oh-my-zsh.sh
@@ -44,6 +48,9 @@ setup() {
   # Create mock ~/.local/bin/env (required by zshrc)
   mkdir -p ~/.local/bin
   touch ~/.local/bin/env
+
+  # Create directories needed for symlinks
+  mkdir -p ~/.config/opencode
 
   # Configure git for bootstrap script
   git config --global user.email "test@example.com"
@@ -53,6 +60,7 @@ setup() {
 # Cleanup function: removes test artifacts
 cleanup() {
   info "Cleaning up..."
+  cd ~  # Return to home before removing directories
   rm -rf ~/.dotfiles
   rm -rf ~/.zshrc
   rm -rf ~/.dotfiles_profile
