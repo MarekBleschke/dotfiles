@@ -1,15 +1,15 @@
-FROM ubuntu:22.04
+FROM alpine:3.19
 
 # Install dependencies
-RUN apt-get update && apt-get install -y \
+RUN apk add --no-cache \
     zsh \
     git \
     curl \
     sudo \
-    && rm -rf /var/lib/apt/lists/*
+    bash
 
 # Create test user with sudo access
-RUN useradd -m -s /bin/zsh testuser && \
+RUN adduser -D -s /bin/zsh testuser && \
     echo "testuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # Switch to test user
