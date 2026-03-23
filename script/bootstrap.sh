@@ -127,48 +127,76 @@ link_file() {
 # install_dotfiles
 # Finds all 'symlinks' files in the dotfiles repo and creates symlinks as specified.
 # With profile support: profile symlinks override base symlinks (file-by-file).
+# Uses two-pass approach for Bash 3.2 compatibility (no associative arrays).
 install_dotfiles() {
   info 'installing dotfiles'
 
   local overwrite_all=false backup_all=false skip_all=false
 
-  # Associative array to track destination -> source mapping
-  # Profile entries will override base entries
-  declare -A symlink_map
+  # Array to track destinations created (indexed array, Bash 3.2 compatible)
+  local created_destinations=()
 
-  # First, collect all base symlinks
+  # Helper: Check if destination was already created in Pass 1
+  destination_exists() {
+    local check_dst="$1"
+    local existing_dst
+    for existing_dst in "${created_destinations[@]}"; do
+      [[ "$existing_dst" == "$check_dst" ]] && return 0
+    done
+    return 1
+  }
+
+  # Pass 1: Create base symlinks
   for symlinks in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name 'symlinks' -not -path '*.git*' -not -path '*profiles*' -not -path '*/test/*'); do
     srcDir="$(dirname "$symlinks")"
     while read -r src dst _; do
-      # skip empty lines and comments
+      # Skip empty lines and comments
       [[ -z "$src" || "$src" =~ ^# ]] && continue
+
       local expanded_dst="${dst/#\$HOME/$HOME}"
-      symlink_map["$expanded_dst"]="$srcDir/$src"
+
+      # Ensure parent directory exists
+      mkdir -p "$(dirname "$expanded_dst")"
+
+      # Create symlink
+      link_file "$srcDir/$src" "$expanded_dst"
+
+      # Track this destination
+      created_destinations+=("$expanded_dst")
     done <"$symlinks"
   done
 
-  # Then, collect profile symlinks (these override base)
+  # Pass 2: Override with profile symlinks (if profile active)
   if [ -n "$PROFILE" ]; then
     local profile_path
     profile_path=$(get_profile_path "$PROFILE")
+
     if [ -d "$profile_path" ]; then
       for symlinks in $(find -H "$profile_path" -maxdepth 2 -name 'symlinks' -not -path '*.git*' 2>/dev/null); do
         srcDir="$(dirname "$symlinks")"
         while read -r src dst _; do
-          # skip empty lines and comments
+          # Skip empty lines and comments
           [[ -z "$src" || "$src" =~ ^# ]] && continue
+
           local expanded_dst="${dst/#\$HOME/$HOME}"
-          symlink_map["$expanded_dst"]="$srcDir/$src"
+
           info "Profile override: $dst"
+
+          # Ensure parent directory exists
+          mkdir -p "$(dirname "$expanded_dst")"
+
+          # If destination exists from base, force remove it
+          if destination_exists "$expanded_dst"; then
+            rm -f "$expanded_dst"
+          fi
+
+          # Create profile symlink (force overwrite if exists)
+          ln -sf "$srcDir/$src" "$expanded_dst"
+          success "linked $srcDir/$src to $expanded_dst"
         done <"$symlinks"
       done
     fi
   fi
-
-  # Create all symlinks
-  for dst in "${!symlink_map[@]}"; do
-    link_file "${symlink_map[$dst]}" "$dst"
-  done
 }
 
 install_dotfiles
