@@ -53,7 +53,21 @@ reload!
 
 ## Testing Changes
 
-This repository has no automated tests. To verify changes:
+### Automated Tests (Docker)
+
+Run the profile feature tests in an isolated Docker container:
+
+```bash
+# Run all tests
+test/run-tests.sh
+
+# Or manually with docker-compose
+cd test && docker-compose run --rm dotfiles-test /dotfiles/test/test-profile-feature.sh
+```
+
+Tests also run automatically via GitHub Actions on push/PR to main.
+
+### Manual Verification
 
 1. **Shell config**: Run `source ~/.zshrc` or `reload!` to test zsh changes
 2. **Symlinks**: Run `script/bootstrap.sh` to recreate symlinks
