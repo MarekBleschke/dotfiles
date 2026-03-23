@@ -8,6 +8,7 @@ services:
       - ./mock-profile:/mock-profile:ro
     environment:
       - HOME=/home/testuser
+      - CI=true
     working_dir: /home/testuser
     stdin_open: true
     tty: true

@@ -29,6 +29,7 @@ jobs:
       - name: Run profile feature tests
         run: |
           docker run --rm \
+            -e CI=true \
             -v "${{ github.workspace }}:/dotfiles:ro" \
             -v "${{ github.workspace }}/test/mock-profile:/mock-profile:ro" \
             dotfiles-test:latest \
