@@ -242,3 +242,9 @@ Core tools installed via Homebrew:
 - All `*.zsh` files are sourced automatically by zshrc
 - Symlinks support non-$HOME destinations (unlike original holman dotfiles)
 - Environment-specific settings go in `~/.localrc` (not tracked)
+- **Bash 3.2 compatibility required**: macOS ships with Bash 3.2; avoid Bash 4+ features:
+  - No `declare -A` (associative arrays)
+  - No `readarray`/`mapfile`
+  - No `${var,,}` or `${var^^}` (case conversion)
+  - No negative array indices `${array[-1]}`
+  - No `;;&` case fall-through
