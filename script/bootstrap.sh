@@ -53,14 +53,15 @@ echo ''
 link_file() {
   local src=$1 dst=$2
 
-  local overwrite= backup= skip=
-  local action=
+  local overwrite="" backup="" skip=""
+  local action=""
 
-  if [ -f "$dst" -o -d "$dst" -o -L "$dst" ]; then
+  if [ -f "$dst" ] || [ -d "$dst" ] || [ -L "$dst" ]; then
 
     if [ "$overwrite_all" == "false" ] && [ "$backup_all" == "false" ] && [ "$skip_all" == "false" ]; then
 
-      local currentSrc="$(readlink $dst)"
+      local currentSrc
+      currentSrc="$(readlink "$dst")"
 
       if [ "$currentSrc" == "$src" ]; then
 
@@ -147,7 +148,7 @@ install_dotfiles() {
   }
 
   # Pass 1: Create base symlinks
-  for symlinks in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name 'symlinks' -not -path '*.git*' -not -path '*profiles*' -not -path '*/test/*'); do
+  while IFS= read -r symlinks; do
     srcDir="$(dirname "$symlinks")"
     while read -r src dst _; do
       # Skip empty lines and comments
@@ -164,7 +165,7 @@ install_dotfiles() {
       # Track this destination
       created_destinations+=("$expanded_dst")
     done <"$symlinks"
-  done
+  done < <(find -H "$DOTFILES_ROOT" -maxdepth 2 -name 'symlinks' -not -path '*.git*' -not -path '*profiles*' -not -path '*/test/*')
 
   # Pass 2: Override with profile symlinks (if profile active)
   if [ -n "$PROFILE" ]; then
@@ -172,7 +173,7 @@ install_dotfiles() {
     profile_path=$(get_profile_path "$PROFILE")
 
     if [ -d "$profile_path" ]; then
-      for symlinks in $(find -H "$profile_path" -maxdepth 2 -name 'symlinks' -not -path '*.git*' 2>/dev/null); do
+      while IFS= read -r symlinks; do
         srcDir="$(dirname "$symlinks")"
         while read -r src dst _; do
           # Skip empty lines and comments
@@ -194,7 +195,7 @@ install_dotfiles() {
           ln -sf "$srcDir/$src" "$expanded_dst"
           success "linked $srcDir/$src to $expanded_dst"
         done <"$symlinks"
-      done
+      done < <(find -H "$profile_path" -maxdepth 2 -name 'symlinks' -not -path '*.git*' 2>/dev/null)
     fi
   fi
 }
