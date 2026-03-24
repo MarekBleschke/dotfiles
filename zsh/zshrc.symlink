@@ -26,6 +26,12 @@ export MY_ZSH=$HOME/.dotfiles
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/workspace
 
+# Load profile from saved file or environment variable
+DOTFILES_PROFILE_FILE="$HOME/.dotfiles_profile"
+if [[ -z "${DOTFILES_PROFILE:-}" && -f "$DOTFILES_PROFILE_FILE" ]]; then
+  export DOTFILES_PROFILE=$(cat "$DOTFILES_PROFILE_FILE")
+fi
+
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
 # you'll have access to them in your scripts.
@@ -34,9 +40,31 @@ then
   source ~/.localrc
 fi
 
-# all of our zsh files
+# Collect all zsh files with profile support
+# Profile files override base files (file-by-file merge)
 typeset -U config_files
-config_files=($MY_ZSH/**/*.zsh)
+typeset -A file_map  # Maps relative path -> absolute path
+
+# First, collect base dotfiles (excluding profiles directory)
+for file in $MY_ZSH/**/*.zsh; do
+  # Skip files in profiles directory
+  [[ "$file" == *"/profiles/"* ]] && continue
+  # Get relative path from MY_ZSH
+  local rel_path="${file#$MY_ZSH/}"
+  file_map[$rel_path]="$file"
+done
+
+# Then, collect profile files (these override base files)
+if [[ -n "$DOTFILES_PROFILE" && -d "$MY_ZSH/profiles/$DOTFILES_PROFILE" ]]; then
+  for file in $MY_ZSH/profiles/$DOTFILES_PROFILE/**/*.zsh; do
+    # Get relative path from profile directory
+    local rel_path="${file#$MY_ZSH/profiles/$DOTFILES_PROFILE/}"
+    file_map[$rel_path]="$file"
+  done
+fi
+
+# Convert map values to array
+config_files=(${(v)file_map})
 
 # load the path files
 for file in ${(M)config_files:#*/path.zsh}
@@ -61,6 +89,7 @@ do
 done
 
 unset config_files
+unset file_map
 
 
 . "$HOME/.local/bin/env"
