@@ -35,12 +35,6 @@ jobs:
             dotfiles-test:latest \
             /dotfiles/test/test-profile-feature.sh
 
-      - name: Shellcheck scripts
-        uses: ludeeus/action-shellcheck@master
-        with:
-          scandir: './script'
-          severity: warning
-
   lint:
     runs-on: ubuntu-latest
 
@@ -51,11 +45,11 @@ jobs:
       - name: Shellcheck bin scripts
         uses: ludeeus/action-shellcheck@master
         with:
-          scandir: './bin'
+          scandir: "./bin"
           severity: warning
 
-      - name: Shellcheck test scripts
+      - name: Shellcheck scripts
         uses: ludeeus/action-shellcheck@master
         with:
-          scandir: './test'
+          scandir: "./script"
           severity: warning
