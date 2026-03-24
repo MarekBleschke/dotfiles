@@ -235,6 +235,40 @@ Core tools installed via Homebrew:
 - Languages: go, node (via nvm), uv (python)
 - Utils: bat, jq, tree, wget, tmux, zk
 
+## Git Commit Guidelines
+
+When committing changes made by AI agents:
+
+**Commit message format:**
+- Prefix all commits with `AGENT:` for general changes
+- Use `AGENT FIX:` prefix for bug fixes
+- Write meaningful commit messages that explain what and why
+- Include details of changes in the commit body when helpful
+
+**Committing process:**
+```bash
+# Only add files explicitly modified by you
+git add file1.sh file2.zsh
+
+# Use meaningful commit messages with AGENT prefix
+git commit -m "AGENT: add new feature X
+
+- Detail 1
+- Detail 2"
+
+# For bug fixes, use AGENT FIX prefix
+git commit -m "AGENT FIX: resolve shellcheck warnings
+
+- Fixed issue 1
+- Fixed issue 2"
+```
+
+**Important rules:**
+- **NEVER push commits** - let the user decide when to push
+- **Only add files you explicitly modified** - avoid `git add .` or `git commit -a`
+- **Do not commit** untracked files that were created as byproducts (temp files, logs, etc.)
+- **Always check `git status`** before committing to see what will be included
+
 ## Important Notes
 
 - `$MY_ZSH` is used instead of `$ZSH` to avoid collision with oh-my-zsh
