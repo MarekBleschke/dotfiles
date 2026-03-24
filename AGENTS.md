@@ -53,7 +53,21 @@ reload!
 
 ## Testing Changes
 
-This repository has no automated tests. To verify changes:
+### Automated Tests (Docker)
+
+Run the profile feature tests in an isolated Docker container:
+
+```bash
+# Run all tests
+test/run-tests.sh
+
+# Or manually with docker-compose
+cd test && docker-compose run --rm dotfiles-test /dotfiles/test/test-profile-feature.sh
+```
+
+Tests also run automatically via GitHub Actions on push/PR to main.
+
+### Manual Verification
 
 1. **Shell config**: Run `source ~/.zshrc` or `reload!` to test zsh changes
 2. **Symlinks**: Run `script/bootstrap.sh` to recreate symlinks
@@ -221,6 +235,40 @@ Core tools installed via Homebrew:
 - Languages: go, node (via nvm), uv (python)
 - Utils: bat, jq, tree, wget, tmux, zk
 
+## Git Commit Guidelines
+
+When committing changes made by AI agents:
+
+**Commit message format:**
+- Prefix all commits with `AGENT:` for general changes
+- Use `AGENT FIX:` prefix for bug fixes
+- Write meaningful commit messages that explain what and why
+- Include details of changes in the commit body when helpful
+
+**Committing process:**
+```bash
+# Only add files explicitly modified by you
+git add file1.sh file2.zsh
+
+# Use meaningful commit messages with AGENT prefix
+git commit -m "AGENT: add new feature X
+
+- Detail 1
+- Detail 2"
+
+# For bug fixes, use AGENT FIX prefix
+git commit -m "AGENT FIX: resolve shellcheck warnings
+
+- Fixed issue 1
+- Fixed issue 2"
+```
+
+**Important rules:**
+- **NEVER push commits** - let the user decide when to push
+- **Only add files you explicitly modified** - avoid `git add .` or `git commit -a`
+- **Do not commit** untracked files that were created as byproducts (temp files, logs, etc.)
+- **Always check `git status`** before committing to see what will be included
+
 ## Important Notes
 
 - `$MY_ZSH` is used instead of `$ZSH` to avoid collision with oh-my-zsh
@@ -228,3 +276,9 @@ Core tools installed via Homebrew:
 - All `*.zsh` files are sourced automatically by zshrc
 - Symlinks support non-$HOME destinations (unlike original holman dotfiles)
 - Environment-specific settings go in `~/.localrc` (not tracked)
+- **Bash 3.2 compatibility required**: macOS ships with Bash 3.2; avoid Bash 4+ features:
+  - No `declare -A` (associative arrays)
+  - No `readarray`/`mapfile`
+  - No `${var,,}` or `${var^^}` (case conversion)
+  - No negative array indices `${array[-1]}`
+  - No `;;&` case fall-through

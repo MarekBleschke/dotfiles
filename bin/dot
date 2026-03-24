@@ -50,18 +50,20 @@ else
   echo "› Using base configuration (no profile)"
 fi
 
-# Update dotfiles
-echo "› git pull"
-if [[ "${DEBUG:-0}" == 1 ]]; then
-  echo "skipping git pull - DEBUG mode"
+# Update dotfiles (skip in CI/testing environments)
+if [[ "${CI:-}" == "true" ]]; then
+  echo "› Skipping git operations (CI environment)"
+elif [[ "${DEBUG:-0}" == 1 ]]; then
+  echo "› Skipping git operations (DEBUG mode)"
 else
-  git -C $MY_ZSH pull
-fi
+  echo "› git pull"
+  git -C "$MY_ZSH" pull
 
-# Update submodules (for profiles)
-if [[ -n "$DOTFILES_PROFILE" ]]; then
-  echo "› git submodule update"
-  git -C $MY_ZSH submodule update --init --recursive
+  # Update submodules (for profiles)
+  if [[ -n "$DOTFILES_PROFILE" ]]; then
+    echo "› git submodule update"
+    git -C "$MY_ZSH" submodule update --init --recursive
+  fi
 fi
 
 # Set macOS defaults
