@@ -15,7 +15,6 @@ brew "vim"
 brew "uv"
 brew "wget"
 brew "wrk"
-brew "zk"
 brew "opencode"
 
 cask "karabiner-elements"
