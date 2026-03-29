@@ -17,6 +17,7 @@ brew "wget"
 brew "wrk"
 brew "opencode"
 
+cask "ghostty"
 cask "karabiner-elements"
 cask "font-hack-nerd-font"
 cask "iterm2"
