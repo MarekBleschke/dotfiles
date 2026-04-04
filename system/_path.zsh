@@ -1,1 +1,1 @@
-export PATH="$MY_ZSH/bin:$PATH"
+export PATH="$MY_ZSH/bin:$HOME/go/bin:$PATH"
