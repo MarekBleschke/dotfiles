@@ -1,5 +1,0 @@
-- [ ] remove aerospace as it doesn't work well with ghostty
-- [ ] resign from tmux in favor of ghostty tabs and splits?
-- [ ] if resigning from tmux remove also tmux-sessionizer
-- [ ] see if osx desktops can be created automatgilally
-- [ ] check if starting app can be moved automatically to osx desktop
