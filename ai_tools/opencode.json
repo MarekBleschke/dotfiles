@@ -3,6 +3,6 @@
   "model": "github-copilot/claude-sonnet-4.6",
   "small_model": "github-copilot/claude-haiku-4.5",
   "plugin": [
-    "superpowers@git+https://github.com/obra/superpowers.git"
+    "superpowers@git+https://github.com/MarekBleschke/superpowers.git"
   ],
 }
