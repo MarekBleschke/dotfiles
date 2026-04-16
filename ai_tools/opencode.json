@@ -17,24 +17,25 @@
       "temperature": 0.2,
       "system_prompt": "Use superpowers:subagent-driven-development skill."
     },
+    // TODO: try claud-sonnet or other model.
     "Implementer": {
       "model": "github-copilot/gpt-5.3-codex",
-      "temperature": 0.1,
+      // "temperature": 0.1,
       "system_prompt": "You are an expert software engineer. Write clean, production-ready code. Follow best practices and avoid overengineering."
     },
   },
   "command": {
     "spec": {
       "agent": "Brainstorm",
-      "template": "Help me to create new feature:\n\n$ARGUMENTS"
+      "template": "Help me to create new feature. Before creating new spec prepare feature branch in worktree and commit spec file there. Feature description:\n\n$ARGUMENTS"
     },
     "plan": {
       "agent": "Planner",
-      "template": "Write plan from spec:\n\n$ARGUMENTS"
+      "template": "Write plan from spec:\n\n$ARGUMENTS. Use existing feature branch in worktree and commit plan there. If you not sure which branch to use ask."
     },
     "implement": {
       "agent": "Implementer",
-      "template": "Implement the following plan:\n\n$ARGUMENTS. REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development. Fresh subagent per task + two-stage review"
+      "template": "Implement the following plan:\n\n$ARGUMENTS. Use existing feature branch in worktree and commit plan there. If you not sure which branch to use ask. REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development. Fresh subagent per task + two-stage review"
     },
   },
   "plugin": [
