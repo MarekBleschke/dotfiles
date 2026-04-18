@@ -10,28 +10,28 @@
     "Brainstorm": {
       "model": "github-copilot/claude-opus-4.6",
       "temperature": 0.7,
-      "system_prompt": "Use superpowers:braistorming skill."
+      // "system_prompt": "Use superpowers:braistorming skill."
     },
     "Planner": {
       "model": "github-copilot/gpt-5.4",
       "temperature": 0.2,
-      "system_prompt": "Use superpowers:subagent-driven-development skill."
+      // "system_prompt": "Use superpowers:subagent-driven-development skill."
     },
     // TODO: try claud-sonnet or other model.
     "Implementer": {
-      "model": "github-copilot/gpt-5.3-codex",
+      "model": "github-copilot/claude-sonnet-4.6",
       // "temperature": 0.1,
-      "system_prompt": "You are an expert software engineer. Write clean, production-ready code. Follow best practices and avoid overengineering."
+      "system_prompt": "You are an expert software engineer. Write clean, production-ready code. Follow provided instructions, best practices and avoid overengineering."
     },
   },
   "command": {
     "spec": {
       "agent": "Brainstorm",
-      "template": "Help me to create new feature. Before creating new spec prepare feature branch in worktree and commit spec file there. Feature description:\n\n$ARGUMENTS"
+      "template": "Help me to create new feature. Use superpowers:braistorming skill. Before creating new spec prepare feature branch in worktree and commit spec file there. Feature description:\n\n$ARGUMENTS"
     },
     "plan": {
       "agent": "Planner",
-      "template": "Write plan from spec:\n\n$ARGUMENTS. Use existing feature branch in worktree and commit plan there. If you not sure which branch to use ask."
+      "template": "Write plan from spec:\n\n$ARGUMENTS. Use superpowers:subagent-driven-development skill. Use existing feature branch in worktree and commit plan there. If you not sure which branch to use ask."
     },
     "implement": {
       "agent": "Implementer",
