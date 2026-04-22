@@ -46,7 +46,7 @@ typeset -U config_files
 typeset -A file_map  # Maps relative path -> absolute path
 
 # First, collect base dotfiles (excluding profiles directory)
-for file in $MY_ZSH/**/*.zsh; do
+for file in $MY_ZSH/**/*.zsh(N); do
   # Skip files in profiles directory
   [[ "$file" == *"/profiles/"* || "$file" == *"/test/"* ]] && continue
   # Get relative path from MY_ZSH
@@ -56,7 +56,7 @@ done
 
 # Then, collect profile files (these override base files)
 if [[ -n "$DOTFILES_PROFILE" && -d "$MY_ZSH/profiles/$DOTFILES_PROFILE" ]]; then
-  for file in $MY_ZSH/profiles/$DOTFILES_PROFILE/**/*.zsh; do
+  for file in $MY_ZSH/profiles/$DOTFILES_PROFILE/**/*.zsh(N); do
     # Get relative path from profile directory
     local rel_path="${file#$MY_ZSH/profiles/$DOTFILES_PROFILE/}"
     file_map[$rel_path]="$file"
