@@ -1,44 +1,16 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "default_agent": "fast_agent",
-  "small_model": "github-copilot/claude-haiku-4.5",
-  "agent": {
-    "Fast": {
-      "model": "github-copilot/gpt-5-mini",
-      "system_prompt": "You are a fast and concise assistant."
-    },
-    "Brainstorm": {
-      "model": "github-copilot/claude-opus-4.6",
-      "temperature": 0.7,
-      // "system_prompt": "Use superpowers:braistorming skill."
-    },
-    "Planner": {
-      "model": "github-copilot/gpt-5.4",
-      "temperature": 0.2,
-      // "system_prompt": "Use superpowers:subagent-driven-development skill."
-    },
-    // TODO: try claud-sonnet or other model.
-    "Implementer": {
-      "model": "github-copilot/claude-sonnet-4.6",
-      // "temperature": 0.1,
-      "system_prompt": "You are an expert software engineer. Write clean, production-ready code. Follow provided instructions, best practices and avoid overengineering."
-    },
-  },
-  "command": {
-    "spec": {
-      "agent": "Brainstorm",
-      "template": "Help me to create new feature. Use superpowers:braistorming skill. Before creating new spec prepare feature branch in worktree and commit spec file there. Feature description:\n\n$ARGUMENTS"
-    },
-    "plan": {
-      "agent": "Planner",
-      "template": "Write plan from spec:\n\n$ARGUMENTS. Use superpowers:subagent-driven-development skill. Use existing feature branch in worktree and commit plan there. If you not sure which branch to use ask."
-    },
-    "implement": {
-      "agent": "Implementer",
-      "template": "Implement the following plan:\n\n$ARGUMENTS. Use existing feature branch in worktree and commit plan there. If you not sure which branch to use ask. REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development. Fresh subagent per task + two-stage review"
-    },
-  },
-  "plugin": [
-    "superpowers@git+https://github.com/MarekBleschke/superpowers.git"
-  ],
+  // OpenCode Go model variant
+  "model": "opencode-go/qwen3.6-plus",
+  "small_model": "opencode-go/glm-5",
+  "watcher": {
+    "ignore": [
+      ".git/**",
+      "node_modules/**",
+      "dist/**",
+      "build/**",
+      ".next/**",
+      "coverage/**",
+    ]
+  }
 }
