@@ -53,19 +53,7 @@ reload!
 
 ## Testing Changes
 
-### Automated Tests (Docker)
-
-Run the profile feature tests in an isolated Docker container:
-
-```bash
-# Run all tests
-test/run-tests.sh
-
-# Or manually with docker-compose
-cd test && docker-compose run --rm dotfiles-test /dotfiles/test/test-profile-feature.sh
-```
-
-Tests also run automatically via GitHub Actions on push/PR to main.
+There are currently no automated tests for this dotfiles repository.
 
 ### Manual Verification
 
