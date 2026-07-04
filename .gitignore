@@ -1,2 +1,4 @@
 keyboard/karabiner/assets
 keyboard/karabiner/automatic_backups
+local/*
+!local/.gitkeep

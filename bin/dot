@@ -34,22 +34,6 @@ done
 
 export MY_ZSH=$HOME/.dotfiles
 
-# Load saved profile
-DOTFILES_PROFILE_FILE="$HOME/.dotfiles_profile"
-if [[ -f "$DOTFILES_PROFILE_FILE" ]]; then
-  DOTFILES_PROFILE=$(cat "$DOTFILES_PROFILE_FILE")
-  # Validate profile directory exists
-  if [[ ! -d "$MY_ZSH/profiles/$DOTFILES_PROFILE" ]]; then
-    echo "Warning: Profile '$DOTFILES_PROFILE' not found at $MY_ZSH/profiles/$DOTFILES_PROFILE"
-    echo "Run 'git submodule update --init' or remove ~/.dotfiles_profile"
-    exit 1
-  fi
-  echo "› Using profile: $DOTFILES_PROFILE"
-else
-  DOTFILES_PROFILE=""
-  echo "› Using base configuration (no profile)"
-fi
-
 # Update dotfiles (skip in CI/testing environments)
 if [[ "${CI:-}" == "true" ]]; then
   echo "› Skipping git operations (CI environment)"
@@ -58,12 +42,6 @@ elif [[ "${DEBUG:-0}" == 1 ]]; then
 else
   echo "› git pull"
   git -C "$MY_ZSH" pull
-
-  # Update submodules (for profiles)
-  if [[ -n "$DOTFILES_PROFILE" ]]; then
-    echo "› git submodule update"
-    git -C "$MY_ZSH" submodule update --init --recursive
-  fi
 fi
 
 # Set macOS defaults

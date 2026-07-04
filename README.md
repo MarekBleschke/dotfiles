@@ -6,7 +6,6 @@ Main differences:
 
 - topic/symlinks file for list of symlinks to create. Support other destination paths than `$HOME`.
 - changed `$ZSH` to `$MY_ZSH` - collision with oh-my-zsh
-- **configuration profiles** - separate repositories as git submodules for machine-specific overrides
 
 ## topical
 
@@ -32,68 +31,11 @@ There's a few special files in the hierarchy.
 and a dst to link to. They should be separated by white sign (i.e. space).
 Src path should be relative to topic directory. For dst path `$HOME` will
 be resolved to home directory.
-
-## profiles
-
-Profiles allow you to maintain machine-specific configurations in separate
-git repositories. Profile repos are stored as git submodules in the `profiles/`
-directory.
-
-### How profiles work
-
-- Profile files **override** base dotfiles on a file-by-file basis
-- If a profile has `git/aliases.zsh`, it replaces only that file from base
-- All other base files are still loaded
-- Profiles can also add **new topics** that don't exist in base
-
-### Adding a profile
-
-```sh
-# Add a profile as a git submodule
-git submodule add git@github.com:youruser/dotfiles-work.git profiles/work
-
-# Bootstrap with the profile
-script/bootstrap.sh --profile work
-
-# Or use environment variable
-DOTFILES_PROFILE=work script/bootstrap.sh
-```
-
-### Profile repository structure
-
-Your profile repo should mirror the dotfiles topic structure:
-
-```
-dotfiles-work/          # Your profile repository
-├── git/
-│   └── aliases.zsh     # Overrides base git/aliases.zsh
-├── editor/
-│   └── env.zsh         # Overrides base editor/env.zsh
-├── work-tools/         # New topic (only in this profile)
-│   ├── path.zsh
-│   └── install.sh
-└── symlinks            # Profile-level symlinks
-```
-
-### Profile selection priority
-
-1. Command line argument: `--profile work`
-2. Environment variable: `DOTFILES_PROFILE=work`
-3. Saved profile file: `~/.dotfiles_profile`
-
-The selected profile is automatically saved to `~/.dotfiles_profile` for
-future shell sessions.
-
-### Switching profiles
-
-```sh
-# Switch to a different profile
-script/bootstrap.sh --profile personal
-
-# Clear profile (use base config only)
-rm ~/.dotfiles_profile
-script/bootstrap.sh
-```
+- **local/\*.zsh**: Machine-specific configuration. Add any `.zsh` files here
+for settings that differ between machines (e.g., home vs work). This directory
+is not tracked in git and meant to be customized per machine.
+- **~/.localrc**: For secrets, tokens, and private environment variables. This
+file is sourced automatically but should NOT be committed to the repository.
 
 ## install
 

@@ -1,4 +1,4 @@
-name: Test Profile Feature
+name: Lint
 
 on:
   push:
@@ -7,34 +7,6 @@ on:
     branches: [main]
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build test container
-        uses: docker/build-push-action@v5
-        with:
-          context: ./test
-          load: true
-          tags: dotfiles-test:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
-      - name: Run profile feature tests
-        run: |
-          docker run --rm \
-            -e CI=true \
-            -v "${{ github.workspace }}:/dotfiles:ro" \
-            -v "${{ github.workspace }}/test/mock-profile:/mock-profile:ro" \
-            dotfiles-test:latest \
-            /dotfiles/test/test-profile-feature.sh
-
   lint:
     runs-on: ubuntu-latest
 
