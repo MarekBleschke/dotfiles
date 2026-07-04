@@ -1,3 +1,2 @@
 nvim $HOME/.config/nvim
-nvim_kickstart $HOME/.config/nvim_kickstart
 markdownlint-cli2.yaml $HOME/.markdownlint-cli2.yaml

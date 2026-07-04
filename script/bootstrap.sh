@@ -5,7 +5,7 @@
 
 source "$(dirname "$0")/_functions.sh" # Load helper functions
 
-cd "$(dirname "$0")/.."   # Change to repository root
+cd "$(dirname "$0")/.." # Change to repository root
 DOTFILES_ROOT=$(pwd -P) # Store absolute path to dotfiles root
 export DOTFILES_ROOT
 
@@ -101,9 +101,16 @@ install_dotfiles() {
 
   while IFS= read -r symlinks; do
     srcDir="$(dirname "$symlinks")"
-    while read -r src dst _; do
+    while IFS= read -r line; do
       # Skip empty lines and comments
-      [[ -z "$src" || "$src" =~ ^# ]] && continue
+      [[ -z "$line" || "$line" =~ ^# ]] && continue
+
+      # Extract src (first word) and dst (rest of line)
+      src="${line%% *}"
+      dst="${line#* }"
+
+      # Convert escaped spaces to actual spaces
+      dst="${dst//\\ / }"
 
       local expanded_dst="${dst/#\$HOME/$HOME}"
 

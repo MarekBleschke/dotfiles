@@ -31,6 +31,11 @@ There's a few special files in the hierarchy.
 and a dst to link to. They should be separated by white sign (i.e. space).
 Src path should be relative to topic directory. For dst path `$HOME` will
 be resolved to home directory.
+- **local/\*.zsh**: Machine-specific configuration. Add any `.zsh` files here
+for settings that differ between machines (e.g., home vs work). This directory
+is not tracked in git and meant to be customized per machine.
+- **~/.localrc**: For secrets, tokens, and private environment variables. This
+file is sourced automatically but should NOT be committed to the repository.
 
 ## install
 

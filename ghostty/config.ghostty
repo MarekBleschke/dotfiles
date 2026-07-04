@@ -1,0 +1,5 @@
+scrollback-limit = 50000000
+keybind = super+alt+k=goto_split:up
+keybind = super+alt+j=goto_split:down
+keybind = super+alt+h=goto_split:left
+keybind = super+alt+l=goto_split:right
