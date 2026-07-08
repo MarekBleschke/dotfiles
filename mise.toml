@@ -1,0 +1,58 @@
+[bootstrap.packages]
+"brew:bat" = "latest"
+"brew:fd" = "latest"
+"brew:fzf" = "latest"
+"brew:gh" = "latest"
+"brew:git" = "latest"
+"brew:jq" = "latest"
+"brew:lazygit" = "latest"
+"brew:mise" = "latest"
+"brew:neovim" = "latest"
+"brew:pipx" = "latest"
+"brew:ripgrep" = "latest"
+"brew:tree" = "latest"
+"brew:vim" = "latest"
+"brew:uv" = "latest"
+"brew:wget" = "latest"
+"brew:wrk" = "latest"
+"brew:opencode" = "latest"
+"brew:podman" = "latest"
+"brew:gnupg" = "latest"
+"brew:starship" = "latest"
+"brew-cask:ghostty" = "latest"
+"brew-cask:karabiner-elements" = "latest"
+"brew-cask:font-hack-nerd-font" = "latest"
+"brew-cask:obsidian" = "latest"
+"brew-cask:localsend" = "latest"
+
+[settings]
+dotfiles.root = "~/.dotfiles"
+dotfiles.default_mode = "symlink"
+
+[dotfiles]
+"~/.dotfiles" = "~/workspace/dotfiles"
+"~/.config/mise/config.toml" = "~/workspace/dotfiles/mise/config.toml"
+"~/.zshrc" = "zsh/zshrc"
+"~/.config/nvim" = "neovim/nvim"
+"~/.markdownlint-cli2.yaml" = "neovim/markdownlint-cli2.yaml"
+"~/.config/ghostty/config" = "ghostty/config.ghostty"
+"~/.config/karabiner" = "karabiner"
+"~/.config/opencode/opencode.json" = "opencode/opencode.json"
+"~/.config/starship.toml" = "starship/starship.toml"
+
+[bootstrap.mise_shell_activate]
+zprofile = "shims"
+zshrc = "activate"
+
+[bootstrap.macos.finder]
+preferred_view_style = "list"
+show_all_files = true
+show_pathbar = true
+show_status_bar = true
+
+# Here are only tools required for bootstrapping. Globally installed toos are in mise/config.toml.
+[tools]
+usage = "latest"
+
+[tasks.bootstrap]
+run = "gh auth status || gh auth login"
