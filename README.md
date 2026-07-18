@@ -1,59 +1,22 @@
 # Dotfiles
 
-Inspired by (nice word for copied ;) ) [Holmans doftiles](https://github.com/holman/dotfiles).
+My personal dotfiles inspired by [Holmans doftiles](https://github.com/holman/dotfiles) and [Omarchy](https://github.com/basecamp/omarchy).
 
-Main differences:
 
-- topic/symlinks file for list of symlinks to create. Support other destination paths than `$HOME`.
-- changed `$ZSH` to `$MY_ZSH` - collision with oh-my-zsh
+## Stack
 
-## topical
+- uses [mise](https://mise.jdx.dev/) for workstation bootstrapping and dotfiles management (see [mise.toml](https://github.com/MarekBleschke/dotfiles/blob/new-mise/mise.toml) for config)
+- currently using `zsh` + `oh-my-zsh` + `starship` for shell
+- use `~/.localrc` if you want something to be sourced but not committed to the repository (e.g., secrets, tokens, private environment variables)
+- [bootstrap]() is bootstrapping script which runs basic installs and invokes `mise bootstrap`
 
-Everything's built around topic areas. If you're adding a new area to your
-forked dotfiles — say, "Java" — you can simply add a `java` directory and put
-files in there. Anything with an extension of `.zsh` will get automatically
-included into your shell.
+## How to use
 
-## components
-
-There's a few special files in the hierarchy.
-
-- **bin/**: Anything in `bin/` will get added to your `$PATH` and be made
-  available everywhere.
-- **topic/\*.zsh**: Any files ending in `.zsh` get loaded into your
-  environment.
-- **topic/path.zsh**: Any file named `path.zsh` is loaded first and is
-  expected to setup `$PATH` or similar.
-- **topic/completion.zsh**: Any file named `completion.zsh` is loaded
-  last and is expected to setup autocomplete.
-- **topic/install.sh**: Any file named `install.sh` is executed when you run `script/install`. To avoid being loaded automatically, its extension is `.sh`, not `.zsh`.
-- **topic/symlinks**: each line should contain src to file/dir to link
-and a dst to link to. They should be separated by white sign (i.e. space).
-Src path should be relative to topic directory. For dst path `$HOME` will
-be resolved to home directory.
-- **local/\*.zsh**: Machine-specific configuration. Add any `.zsh` files here
-for settings that differ between machines (e.g., home vs work). This directory
-is not tracked in git and meant to be customized per machine.
-- **~/.localrc**: For secrets, tokens, and private environment variables. This
-file is sourced automatically but should NOT be committed to the repository.
-
-## install
-
-Run this:
+> [!NOTE]
+> [mise.toml](https://github.com/MarekBleschke/dotfiles/blob/new-mise/mise.toml) is configured to use `~/workspace/dotfiles/` as directory for this repo. If you want to change this edit [those lines](https://github.com/MarekBleschke/dotfiles/blob/new-mise/mise.toml#L32-L33) in `mise.toml` before running `./bootrstrap`.
 
 ```sh
-git clone https://github.com/belskar/dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
-script/bootstrap
+git clone git@github.com:MarekBleschke/dotfiles.git 
+cd dotfiles
+./bootstrap
 ```
-
-This will symlink the appropriate files in `.dotfiles` to your home directory.
-Everything is configured and tweaked within `~/.dotfiles`.
-
-The main file you'll want to change right off the bat is `zsh/zshrc.symlink`,
-which sets up a few paths that'll be different on your particular machine.
-
-`dot` is a simple script that installs some dependencies, sets sane macOS
-defaults, and so on. Tweak this script, and occasionally run `dot` from
-time to time to keep your environment fresh and up-to-date. You can find
-this script in `bin/`.
