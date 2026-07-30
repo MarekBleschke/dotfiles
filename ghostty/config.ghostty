@@ -1,5 +1,27 @@
+theme = "tokyonight"
+font-family = "JetBrainsMono Nerd Font"
+font-style = Regular
+font-size = 12
+
 scrollback-limit = 50000000
-keybind = super+alt+k=goto_split:up
-keybind = super+alt+j=goto_split:down
-keybind = super+alt+h=goto_split:left
-keybind = super+alt+l=goto_split:right
+
+# Better keyboard settings for macOS and tmux
+macos-option-as-alt = left
+keybind = alt+arrow_left=unbind
+keybind = alt+arrow_right=unbind
+
+# Window
+window-theme = ghostty
+window-padding-x = 14
+window-padding-y = 14
+confirm-close-surface=false
+resize-overlay = never
+gtk-toolbar-style = flat
+
+# Cursor styling
+cursor-style = "block"
+cursor-style-blink = false
+
+# Cursor styling + SSH session terminfo
+# (all shell integration options must be passed together)
+shell-integration-features = no-cursor,ssh-env

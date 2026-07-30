@@ -11,7 +11,6 @@ export ZSH="$HOME/.oh-my-zsh"
 
 # Using starship for prompt.
 ZSH_THEME=""
-eval "$(starship init zsh)"
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
@@ -22,26 +21,10 @@ plugins=(mise)
 
 source $ZSH/oh-my-zsh.sh
 
-# --> end oh-my-zsh stuff
-
-# Environment variables
-export PATH="$HOME/.local/bin:$HOME/go/bin:$PATH"
-
-fpath=($fpath "$HOME/.zsh/completions")
-
-export EDITOR='nvim'
-
-# Aliases
-alias invim='nvim $(fzf --preview="bat -f {}" -m)'
-
-## Git
-alias gss='git status --short'
-alias glod="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset'"
-alias gloda="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --all"
-alias glol="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset'"
-alias glola="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --all"
-
-alias reload!='. ~/.zshrc'
+source "$HOME/.config/shell/zoptions.zsh"
+source "$HOME/.config/shell/envs.sh"
+source "$HOME/.config/shell/aliases.sh"
+source "$HOME/.config/shell/functions.sh"
 
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
@@ -55,7 +38,4 @@ fi
 autoload -U compinit
 compinit
 
-# Tools initialization
-eval "$(mise activate zsh)"
-
-source <(fzf --zsh)
+source "$HOME/.config/shell/inits.sh"

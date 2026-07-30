@@ -19,11 +19,21 @@
 "brew:podman" = "latest"
 "brew:gnupg" = "latest"
 "brew:starship" = "latest"
+"brew:tmux" = "latest"
+"brew:zoxide" = "latest"                             # better cd
+"brew:eza" = "latest"                                # better ls
+"brew:hunk" = "latest"
 "brew-cask:ghostty" = "latest"
 "brew-cask:karabiner-elements" = "latest"
 "brew-cask:font-hack-nerd-font" = "latest"
 "brew-cask:obsidian" = "latest"
 "brew-cask:localsend" = "latest"
+"brew-cask:font-jetbrains-mono-nerd-font" = "latest"
+"brew-cask:google-chrome" = "latest"
+
+# `tobi/try` doesn't publish Homebrew API metadata, so we need to install it using brew directly.
+[bootstrap.hooks.post-packages]
+run = ["brew tap tobi/try https://github.com/tobi/try", "brew install try"]
 
 [settings]
 dotfiles.root = "~/.dotfiles"
@@ -33,22 +43,35 @@ dotfiles.default_mode = "symlink"
 "~/.dotfiles" = "~/workspace/dotfiles"
 "~/.config/mise/config.toml" = "~/workspace/dotfiles/mise/config.toml"
 "~/.zshrc" = "zsh/zshrc"
+"~/.config/shell/" = "zsh/shell"
 "~/.config/nvim" = "neovim/nvim"
 "~/.markdownlint-cli2.yaml" = "neovim/markdownlint-cli2.yaml"
 "~/.config/ghostty/config" = "ghostty/config.ghostty"
 "~/.config/karabiner" = "karabiner"
 "~/.config/opencode/opencode.json" = "opencode/opencode.json"
 "~/.config/starship.toml" = "starship/starship.toml"
+"~/.tmux.conf" = "tmux/tmux.conf"
 
 [bootstrap.mise_shell_activate]
 zprofile = "shims"
 zshrc = "activate"
+
+[bootstrap.macos.dock]
+autohide = true
+orientation = "right"
+tilesize = 43
+show_recents = false
+mru_spaces = false
 
 [bootstrap.macos.finder]
 preferred_view_style = "list"
 show_all_files = true
 show_pathbar = true
 show_status_bar = true
+
+[bootstrap.macos.keyboard]
+key_repeat = 2
+initial_key_repeat = 15
 
 # Here are only tools required for bootstrapping. Globally installed toos are in mise/config.toml.
 [tools]
