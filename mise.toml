@@ -4,6 +4,7 @@
 "brew:fzf" = "latest"
 "brew:gh" = "latest"
 "brew:git" = "latest"
+"brew:herdr" = "latest"
 "brew:jq" = "latest"
 "brew:lazygit" = "latest"
 "brew:mise" = "latest"
@@ -51,6 +52,7 @@ dotfiles.default_mode = "symlink"
 "~/.config/opencode/opencode.json" = "opencode/opencode.json"
 "~/.config/starship.toml" = "starship/starship.toml"
 "~/.tmux.conf" = "tmux/tmux.conf"
+"~/.config/herdr/config.toml" = "herdr/config.toml"
 
 [bootstrap.mise_shell_activate]
 zprofile = "shims"

@@ -32,6 +32,7 @@ fi
 
 # Tools
 alias t='tmux attach || tmux new -s Work'
+alias h='herdr'
 n() { if [ "$#" -eq 0 ]; then command nvim .; else command nvim "$@"; fi; }
 
 ## Git
