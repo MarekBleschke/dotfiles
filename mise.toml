@@ -53,6 +53,8 @@ dotfiles.default_mode = "symlink"
 "~/.config/starship.toml" = "starship/starship.toml"
 "~/.tmux.conf" = "tmux/tmux.conf"
 "~/.config/herdr/config.toml" = "herdr/config.toml"
+"~/.config/herdr-app/settings.json" = "herdr-app/settings.json"
+"~/.config/herdr-app/keys.json" = "herdr-app/keys.json"
 
 [bootstrap.mise_shell_activate]
 zprofile = "shims"
