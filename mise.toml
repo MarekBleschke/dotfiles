@@ -55,6 +55,10 @@ dotfiles.default_mode = "symlink"
 "~/.config/herdr/config.toml" = "herdr/config.toml"
 "~/.config/herdr-app/settings.json" = "herdr-app/settings.json"
 "~/.config/herdr-app/keys.json" = "herdr-app/keys.json"
+"~/.config/herdr-app/layouts/my-main.json" = { source = "herdr-app/layout-main.json", mode = "copy" }
+"~/.config/herdr-app/mods/agents-usage/" = { source = "herdr-app/mods/agents-usage", mode = "copy" }
+"~/.config/herdr-app/mods/my-tabs/" = { source = "herdr-app/mods/my-tabs", mode = "copy" }
+"~/.config/herdr-app/mods/quotes/" = { source = "herdr-app/mods/quotes", mode = "copy" }
 
 [bootstrap.mise_shell_activate]
 zprofile = "shims"
